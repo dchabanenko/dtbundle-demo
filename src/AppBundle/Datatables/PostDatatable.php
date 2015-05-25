@@ -89,6 +89,9 @@ class PostDatatable extends AbstractDatatableView
             "individual_filtering_position" => "both",
             "use_integration_options" => true
         ));
+        $em = $this->container->get('doctrine')->getManager();
+        $users = $em->getRepository('AppBundle:User')->findAll();
+
 
         $this->columnBuilder
             ->add(null, "multiselect", array(
@@ -131,7 +134,9 @@ class PostDatatable extends AbstractDatatableView
                 "name" => "",
                 "orderable" => false,
                 "render" => "render_boolean",
-                "searchable" => false,
+                "searchable" => true,
+                "searchType" => 'eq',
+                'filterType' => 'select',
                 "title" => "Visible",
                 "type" => "",
                 "visible" => true,
@@ -168,6 +173,9 @@ class PostDatatable extends AbstractDatatableView
                 "orderable" => true,
                 "render" => null,
                 "searchable" => true,
+                'filterType' => 'select', //  render the search input as a dropdown
+                'filterOptions' => $this->getCollectionAsOptionsArray($users, 'email', 'username'), // dropdown options list. This method should return all options as array [email => username]
+                'filterProperty' => 'authorEmail', // You can set up another property, different with the current column, to search on.
                 "title" => "<span class='glyphicon glyphicon-user' aria-hidden='true'></span> Author",
                 "type" => "",
                 "visible" => true,
