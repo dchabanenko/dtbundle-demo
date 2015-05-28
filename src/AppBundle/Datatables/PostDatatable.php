@@ -135,8 +135,7 @@ class PostDatatable extends AbstractDatatableView
                 "orderable" => false,
                 "render" => "render_boolean",
                 "searchable" => true,
-                "searchType" => 'eq',
-                'filterType' => 'select',
+                "search_type" => 'eq',
                 "title" => "Visible",
                 "type" => "",
                 "visible" => true,
@@ -173,9 +172,9 @@ class PostDatatable extends AbstractDatatableView
                 "orderable" => true,
                 "render" => null,
                 "searchable" => true,
-                'filterType' => 'select', //  render the search input as a dropdown
-                'filterOptions' => $this->getCollectionAsOptionsArray($users, 'email', 'username'), // dropdown options list. This method should return all options as array [email => username]
-                'filterProperty' => 'authorEmail', // You can set up another property, different with the current column, to search on.
+                'filter_type' => 'select', //  render the search input as a dropdown
+                'filter_options' => ['' => 'Any'] + $this->getCollectionAsOptionsArray($users, 'email', 'username'), // dropdown options list. This method should return all options as array [email => username]
+                'filter_property' => 'authorEmail', // You can set up another property, different with the current column, to search on.
                 "title" => "<span class='glyphicon glyphicon-user' aria-hidden='true'></span> Author",
                 "type" => "",
                 "visible" => true,

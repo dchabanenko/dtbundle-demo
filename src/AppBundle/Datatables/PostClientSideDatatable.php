@@ -17,6 +17,10 @@ class PostClientSideDatatable extends AbstractDatatableView
      */
     public function buildDatatableView()
     {
+
+        $em = $this->container->get('doctrine')->getManager();
+        $users = $em->getRepository('AppBundle:User')->findAll();
+
         // the default settings, except "scroll_x" and "server_side"
         $this->features->setFeatures(array(
             "auto_width" => true,
@@ -77,6 +81,7 @@ class PostClientSideDatatable extends AbstractDatatableView
                 "orderable" => true,
                 "render" => "render_boolean",
                 "searchable" => true,
+                'filter_options' => ['' => 'Any', 'yes' => 'Yes', 'no' => 'No'],
                 "title" => "Visible",
                 "type" => "",
                 "visible" => true,
@@ -113,6 +118,9 @@ class PostClientSideDatatable extends AbstractDatatableView
                 "orderable" => true,
                 "render" => null,
                 "searchable" => true,
+                'filter_type' => 'select', //  render the search input as a dropdown
+                'filter_options' => ['' => 'Any'] + $this->getCollectionAsOptionsArray($users, 'email', 'username'), // dropdown options list. This method should return all options as array [email => username]
+                'filter_property' => 'authorEmail', // You can set up another property, different with the current column, to search on.
                 "title" => "<span class='glyphicon glyphicon-user' aria-hidden='true'></span> Author",
                 "type" => "",
                 "visible" => true,
